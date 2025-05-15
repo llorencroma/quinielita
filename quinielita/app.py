@@ -25,7 +25,7 @@ import resumen
 
 db.init_db()
 
-st.sidebar.title("Menú")
+st.sidebar.title("")
 
 # Diccionario de páginas
 pages = {
@@ -44,15 +44,22 @@ with st.sidebar:
     st.image("images/image2.png", width=250)
 
     page = option_menu(
-        "Menú", list(pages.keys()),
+        "", list(pages.keys()),
         icons=["house", "speedometer", "currency-dollar", "trophy", "list-columns", "gear"],
         default_index=0,
         styles={
-            "container": {"padding": "0!important", "background-color": "#fafafa"},
-            "icon": {"color": "#FF4B4B", "font-size": "18px"},
-            "nav-link": {"font-size": "16px", "text-align": "left"},
-            "nav-link-selected": {"background-color": "#FF4B4B", "color": "white"},
-        }
+        "container": {"padding": "0!important", "color": "white", "background-color": "#0f1117"},
+        "icon": {"color": "white", "font-size": "18px"},
+        "nav-link": {
+            "font-size": "18px",
+            "margin": "0px",
+            "color": "white",
+            "background-color": "#1e1e2f",
+        },
+        "nav-link-selected": {
+            "background-color": "#ff4b4b",
+        },
+    },
     )
 
 # ------- render de la página activa -------
