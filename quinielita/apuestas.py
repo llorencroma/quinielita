@@ -35,6 +35,8 @@ def main():
     def formato_estado(estado):
         if estado == "validado":
             return "🟢 Validado"
+        elif estado =="anulado":
+            return "❌ Anulada"
         else:
             return "⚪ Pendiente"
 
