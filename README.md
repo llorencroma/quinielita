@@ -2,6 +2,7 @@
 
 **Quinielita** es una app de apuestas ligeras para eventos especiales como bodas, cumpleaños y celebraciones.  El objetivo es que las apuestas se paguen a partir del bote generado con todos los participantes y no a partir de una "banca".
 
+La interfaz está construida con Streamlit y el backend usa SQLite. No requiere registro ni pagos online. Los pagos se deben realizar a parte.
 ---
 
 ## 🚀 Instalación
@@ -10,13 +11,12 @@
 2. Instala dependencias:
 
 ```bash
-pip install streamlit
+pip install -r requirements.txt
 ```
 3. Crea la carpeta de base de datos:
 ```
 mkdir quinielita/data
 ```
-
 
 ## 🏃‍♂️ Cómo correr la app
 ```
@@ -40,6 +40,8 @@ quinielita/
 ├── /utils/
 └── README.md
 ```
+Para más info leer [Quinielita](./quinielita/README.md)
+
 
 ## 🔒 Seguridad
 
