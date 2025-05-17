@@ -61,6 +61,10 @@ with st.sidebar:
         },
     },
     )
+    st.markdown("---")
+    st.markdown("© 2025 ChusBet365 | [View source on GitHub](https://github.com/llorencroma/quinielita)",
+        unsafe_allow_html=True
+    )
 
 # ------- render de la página activa -------
 pages[page]()
