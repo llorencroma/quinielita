@@ -9,6 +9,8 @@ def borrar_apuestas():
 
         cursor.execute("DELETE FROM apuestas")
         cursor.execute("UPDATE temas SET bote_total = 0")
+        cursor.execute("UPDATE opciones_apuesta SET monto_total = 0;")
+        
         conn.commit()
         conn.close()
 

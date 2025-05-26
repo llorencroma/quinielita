@@ -4,11 +4,6 @@ import json
 from models.db import get_connection
 from utils.security import authenticate_admin
 
-# --------------- utilidades ----------------------------------
-def is_mesa(titulo: str) -> bool:
-    """Devuelve True si el tema es el juego de la mesa."""
-    return titulo.lower().startswith("¿quién estará en la mesa")
-
 # -------------------------------------------------------------
 def main():
     st.title("🔧 Panel de Administración")
@@ -218,15 +213,7 @@ def validar_apuesta(cur, ap_id, tema_id, tema_nom, det_json):
     cur.execute("UPDATE apuestas SET estado='validado' WHERE id=?", (ap_id,))
     # 2) bote +1
     cur.execute("UPDATE temas SET bote_total = bote_total + 1 WHERE id=?", (tema_id,))
-    # 3) opcional: sumar contador
-    if not is_mesa(tema_nom):
-        detalle = " | ".join(sorted(json.loads(det_json)))
-        cur.execute("""
-            INSERT INTO opciones_apuesta (tema_id, descripcion, monto_total)
-            VALUES (?, ?, 1)
-            ON CONFLICT(tema_id, descripcion)
-            DO UPDATE SET monto_total = monto_total + 1
-        """, (tema_id, detalle))
+
 
 def invalidar_apuesta(cur, ap_id, tema_id, tema_nom, det_json):
     # 1) estado
@@ -236,16 +223,6 @@ def invalidar_apuesta(cur, ap_id, tema_id, tema_nom, det_json):
         UPDATE temas
         SET bote_total = CASE WHEN bote_total>0 THEN bote_total-1 ELSE 0 END
         WHERE id=?""", (tema_id,))
-    # 3) opcional: restar contador
-    if not is_mesa(tema_nom):
-        detalle = " | ".join(sorted(json.loads(det_json)))
-        cur.execute("""
-            UPDATE opciones_apuesta
-            SET monto_total = CASE
-                WHEN monto_total>0 THEN monto_total-1 ELSE 0 END
-            WHERE tema_id=? AND descripcion=?""",
-            (tema_id, detalle))
-
 
 def borrar_tema_completo(cur, tema_id: int) -> None:
     """Elimina tema + opciones + apuestas."""

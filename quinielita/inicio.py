@@ -59,7 +59,7 @@ def main() -> None:
                 cuotas_html = "<em>Sin apuestas aún.</em>"
 
         card_html = f"""
-        <div style='background:{bg};padding:1rem;border-radius:14px;
+        <div style='color:black;background:{bg};padding:1rem;border-radius:14px;
                     box-shadow:0 2px 6px rgba(0,0,0,0.07);margin-bottom:1rem;'>
             <h3 style='margin:0 0 .3rem 0;font-size:1.15rem;'>{nombre}</h3>
             <p style='margin:0 0 .8rem 0;font-size:.9rem;'>{descripcion}</p>

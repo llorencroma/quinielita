@@ -27,9 +27,9 @@ def main():
         st.header(nombre_tema); st.write(desc); st.divider()
 
         with st.form("form_apuesta"):
-            nombre   = st.text_input("Tu nombre")
-            tel      = st.text_input("Teléfono (+34678901234)")
-            pin      = st.text_input("PIN (1234)", type="password")
+            nombre   = "te" #st.text_input("Tu nombre")
+            tel      = "656565678" #st.text_input("Teléfono (+34678901234)")
+            pin      = st.text_input("PIN (9876)", type="password")
             monto    = 1
             st.write(f"Apuesta fija: 💶 {monto} EUR")
 
