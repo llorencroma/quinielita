@@ -1,4 +1,13 @@
 import streamlit as st
+from models import db
+from streamlit_option_menu import option_menu
+import tutorial
+import inicio
+import apostar
+import ranking
+import apuestas
+import admin
+import winners
 
 # Configurar la página primero
 st.set_page_config(
@@ -13,16 +22,6 @@ st.set_page_config(
     }
 )
 
-from models import db
-from streamlit_option_menu import option_menu
-import tutorial
-import inicio
-import apostar
-import ranking
-import apuestas
-import admin
-import resumen
-
 db.init_db()
 
 st.sidebar.title("")
@@ -30,7 +29,7 @@ st.sidebar.title("")
 # Diccionario de páginas
 pages = {
     "Inicio": inicio.main,
-    #"Resumen": resumen.main,
+    "Ganadores": winners.main,
     "Apostar": apostar.main,
     "Ranking": ranking.main,
     "Todas las Apuestas": apuestas.main,

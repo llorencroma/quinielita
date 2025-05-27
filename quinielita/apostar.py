@@ -27,8 +27,8 @@ def main():
         st.header(nombre_tema); st.write(desc); st.divider()
 
         with st.form("form_apuesta"):
-            nombre   = "te" #st.text_input("Tu nombre")
-            tel      = "656565678" #st.text_input("Teléfono (+34678901234)")
+            nombre   = st.text_input("Tu nombre")
+            tel      = st.text_input("Teléfono (+34678901234)")
             pin      = st.text_input("PIN (9876)", type="password")
             monto    = 1
             st.write(f"Apuesta fija: 💶 {monto} EUR")
@@ -62,9 +62,9 @@ def main():
                 st.error("Datos inválidos. Revisa nombre, teléfono o PIN."); return
             if not seleccion:
                 st.error("Debes elegir al menos una opción."); return
-
-            detalle = json.dumps(seleccion if isinstance(seleccion, list)
-                                 else [seleccion])
+            
+            detalle = json.dumps(seleccion)
+            print(f"Detalle {detalle}")
 
             cur.execute(
                 "INSERT INTO apuestas (tema_id,nombre,telefono,pin,detalle_apuesta,monto)"

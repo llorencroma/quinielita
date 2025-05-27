@@ -20,15 +20,11 @@ def init_db() -> None:
             nombre TEXT,
             descripcion TEXT,
             bote_total REAL DEFAULT 0,
+            correct_answer TEXT,
             modo TEXT DEFAULT 'cerrada'  -- 'cerrada', 'combinacion', or 'abierta'
         )
     """)
 
-    # Ensure 'modo' column exists
-    cursor.execute("PRAGMA table_info(temas)")
-    tema_columns = [col[1] for col in cursor.fetchall()]
-    if "modo" not in tema_columns:
-        cursor.execute("ALTER TABLE temas ADD COLUMN modo TEXT DEFAULT 'cerrada'")
 
     # --- OPCIONES_APUESTA table ---
     cursor.execute("""
@@ -60,6 +56,14 @@ def init_db() -> None:
             fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
     """)
+
+    cursor.execute('''
+            CREATE TABLE IF NOT EXISTS winners (
+                tema_id INTEGER PRIMARY KEY,
+                ganador TEXT,
+                FOREIGN KEY (tema_id) REFERENCES temas(id)
+            )
+    ''')
 
     conn.commit()
     conn.close()

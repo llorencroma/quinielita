@@ -206,6 +206,46 @@ def main():
         st.info("No hay temas creados.")
 
 # -------------------------------------------------------------
+# Update TEMA Correct_answer
+# -------------------------------------------------------------
+    st.header("Respuestas gnadoras")
+    temas = conn.execute(
+        "SELECT id, nombre, modo, correct_answer FROM temas ORDER BY id"
+    ).fetchall()
+
+    for tema_id, nombre, modo, current_answer in temas:
+        st.subheader(f"Tema #{tema_id} — {nombre} (Modo: {modo})")
+
+        # Determinar la entrada según el modo
+        if modo == "cerrada":
+                opciones = [o[0] for o in cur.execute(
+                    "SELECT descripcion FROM opciones_apuesta WHERE tema_id=?", (tema_id,)
+                )]
+                seleccion = st.radio("Selecciona una opción", opciones)
+        elif modo == "combinacion":
+            opciones = [o[0] for o in cur.execute(
+                    "SELECT descripcion FROM opciones_apuesta WHERE tema_id=?", (tema_id,)
+                )]
+            seleccion = st.multiselect("Selecciona una o varias opciones",
+                                        opciones, max_selections=len(opciones))
+        else: # abierta
+            txt = st.text_input("Escribe tu respuesta")
+            seleccion = [txt] if txt else []
+
+        if st.button("Guardar respuesta", key=f"save_{tema_id}"):
+             # Convertir seleccion a JSON string si es lista
+
+            print(f"Seleccion {seleccion}")
+
+            valor = json.dumps(seleccion)
+            # Guardar en la base de datos
+            print(valor)
+            update_tema_answer(conn, tema_id, valor)
+            st.success("Respuesta actualizada")
+
+
+
+# -------------------------------------------------------------
 # business logic
 # -------------------------------------------------------------
 def validar_apuesta(cur, ap_id, tema_id, tema_nom, det_json):
@@ -229,3 +269,15 @@ def borrar_tema_completo(cur, tema_id: int) -> None:
     cur.execute("DELETE FROM apuestas        WHERE tema_id=?", (tema_id,))
     cur.execute("DELETE FROM opciones_apuesta WHERE tema_id=?", (tema_id,))
     cur.execute("DELETE FROM temas           WHERE id=?",      (tema_id,))
+
+
+## add winners answer per tema
+
+
+
+def update_tema_answer(conn, tema_id: int, answer: str):
+    conn.execute(
+        "UPDATE temas SET correct_answer = ? WHERE id = ?",
+        (answer, tema_id)
+    )
+    conn.commit()
