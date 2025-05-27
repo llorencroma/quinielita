@@ -58,7 +58,12 @@ def main():
 
     
 
-    for tema_id, nombre, correct, bote, modo in temas:
+    for tema_id, nombre, correct_json, bote, modo in temas:
+        try:
+            correct = json.loads(correct_json)
+        except Exception:
+            correct = [correct_json]
+        # encontrar el correct_answer de este tema
         st.subheader(f"Tema #{tema_id}: {nombre}")
         st.caption(f"Respuesta correcta: **{correct}**")
         st.caption(f"Bote total: {bote}")
