@@ -15,21 +15,17 @@ def main():
         "SELECT id, nombre, correct_answer, bote_total, modo FROM temas ORDER BY id"
     ).fetchall()
 
-    print(temas)
-
     # 2) Cargamos todas las apuestas
     apuestas = cur.execute(
         "SELECT nombre AS jugador, tema_id, detalle_apuesta FROM apuestas"
     ).fetchall()
 
-    print(apuestas)
     # 3) Para cada tema, filtramos apuestas acertadas
     #    y agrupamos en un dict: { tema_id: {'ganadores': [...], 'bote': int} }
     resultados = {
         tema_id: {'ganadores': [], 'bote': bote}
         for tema_id, _, _, bote, _ in temas
     }
-    print(resultados)
     for jugador, tema_id, detalle_json in apuestas:
         
         # parsear JSON, o usar fallback si no es JSON válido
@@ -58,16 +54,29 @@ def main():
                 resultados[tema_id]['ganadores'].append(jugador)
 
     # 4) Renderizamos todo
+    premios = {}
+
+    
+
     for tema_id, nombre, correct, bote, modo in temas:
         st.subheader(f"Tema #{tema_id}: {nombre}")
         st.caption(f"Respuesta correcta: **{correct}**")
         st.caption(f"Bote total: {bote}")
 
         ganadores = resultados[tema_id]['ganadores']
+        
         if ganadores:
             premio_por_jugador = resultados[tema_id]['bote'] / len(ganadores)
             st.write(f"Premio por jugador: {premio_por_jugador:.2f}")
             for j in sorted(ganadores):
+                premios[j] = premios.get(j, 0) + premio_por_jugador
                 st.write(f"• **{j}** — Premio: {premio_por_jugador:.2f}")
+            print(f" Premios: {premios}")
         else:
             st.write("— No hay ganadores para este tema —")
+
+
+    st.subheader(f"Premios totales")
+    for key in premios:
+
+        st.write(f"• **{key}** — Premio: {premios[key]:.2f}")
