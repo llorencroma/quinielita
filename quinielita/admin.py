@@ -221,15 +221,16 @@ def main():
                 opciones = [o[0] for o in cur.execute(
                     "SELECT descripcion FROM opciones_apuesta WHERE tema_id=?", (tema_id,)
                 )]
-                seleccion = st.radio("Selecciona una opción", opciones)
+
+                seleccion = st.radio("Selecciona una opción para el tema " + str(tema_id), opciones)
         elif modo == "combinacion":
             opciones = [o[0] for o in cur.execute(
                     "SELECT descripcion FROM opciones_apuesta WHERE tema_id=?", (tema_id,)
                 )]
-            seleccion = st.multiselect("Selecciona una o varias opciones",
+            seleccion = st.multiselect("Selecciona una o varias opciones para el tema" + str(tema_id),
                                         opciones, max_selections=len(opciones))
         else: # abierta
-            txt = st.text_input("Escribe tu respuesta")
+            txt = st.text_input("Escribe tu respuesta para el tema" + str(tema_id))
             seleccion = [txt] if txt else []
 
         if st.button("Guardar respuesta", key=f"save_{tema_id}"):
