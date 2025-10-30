@@ -5,7 +5,7 @@
 La interfaz está construida con Streamlit y el backend usa SQLite. No requiere registro ni pagos online. Los pagos se deben realizar a parte.
 ---
 
-## 🚀 Instalación
+## Instalación
 
 1. Clona o descarga este repositorio.
 2. Instala dependencias:
@@ -18,7 +18,7 @@ pip install -r requirements.txt
 mkdir quinielita/data
 ```
 
-## 🏃‍♂️ Cómo correr la app
+## Cómo correr la app
 ```
 cd quinielita
 streamlit run app.py
@@ -27,7 +27,7 @@ streamlit run app.py
 Se abrirá en http://localhost:8501.
 
 
-## 🧱 Estructura
+## Estructura
 
 ```
 quinielita/
@@ -43,12 +43,12 @@ quinielita/
 Para más info leer [Quinielita](./quinielita/README.md)
 
 
-## 🔒 Seguridad
+## Seguridad
 
 - Contraseña para acceder al panel de administración.
 - Validación de PIN para poder realizar apuestas. El PIN se distribuya a los participantes a través de algún otro canal.
 
-## 🛠️ Funcionalidades
+## Funcionalidades
 
 - Ver temas de apuestas y botes correspondientes por cada tema.
 - Realizar apuestas. 
